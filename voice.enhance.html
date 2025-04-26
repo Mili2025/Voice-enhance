@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online voice enhancement tool to optimize and improve your audio recordings. Professional voice enhancement with real-time processing.">
+    <meta name="keywords" content="voice enhancement, audio optimization, voice recorder, sound improvement, audio processing">
+    <meta name="author" content="VoiceEnhancePro">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Voice Enhancement Tool - Optimize Your Audio Online">
+    <meta property="og:description" content="Free online tool to enhance and optimize your voice recordings">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://voiceenhancepro.com">
+    <title>Voice Enhancement Tool | Optimize Your Audio Online</title>
+    <link rel="canonical" href="https://voiceenhancepro.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ff6b6b;
+            --dark-color: #343a40;
+            --light-color: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--light-color);
+            box-shadow: var(--box-shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .ad-banner {
+            background-color: #f1f3f5;
+            padding: 1rem;
+            text-align: center;
+            margin: 2rem 0;
+            border-radius: var(--border-radius);
+        }
+        
+        .tool-container {
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tool-header h2 {
+            color: var(--dark-color);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a56d4;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+        }
+        
+        .btn-danger {
+            background-color: var(--accent-color);
+            color: var(--light-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #e05555;
+        }
+        
+        .audio-visualizer {
+            width: 100%;
+            height: 150px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .visualizer-bars {
+            display: flex;
+            height: 100%;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 1rem;
+        }
+        
+        .bar {
+            width: 8px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+            transition: height 0.1s;
+        }
+        
+        .enhancement-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .control-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: #ddd;
+            outline: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .slider-value {
+            width: 40px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider-toggle {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        
+        .slider-toggle:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider-toggle {
+            background-color: var(--primary-color);
+        }
+        
+        input:checked + .slider-toggle:before {
+            transform: translateX(26px);
+        }
+        
+        .audio-player {
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .result-container {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .result-container h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .download-btn {
+            margin-top: 1rem;
+        }
+        
+        .ad-sidebar {
+            width: 300px;
+            padding: 1rem;
+            background-color: #f1f3f5;
+            border-radius: var(--border-radius);
+            margin-left: 2rem;
+        }
+        
+        .content-wrapper {
+            display: flex;
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--light-color);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #adb5bd;
+        }
+        
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            .ad-sidebar {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 2rem;
+            }
+            
+            .enhancement-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo">VoiceEnhancePro</a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Features</a>
+                <a href="#">How It Works</a>
+                <a href="#">Pricing</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>Enhance Your Voice Recordings</h1>
+            <p>Professional-grade voice enhancement tool that helps you remove background noise, improve clarity, and optimize your audio for podcasts, videos, and more.</p>
+        </div>
+        
+        <div class="ad-banner">
+            <!-- Google AdSense Banner Ad -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                crossorigin="anonymous"></script>
+            <!-- Top Banner Ad -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                data-ad-slot="XXXXXXXXXX"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h2>Voice Enhancement Tool</h2>
+                        <div class="controls">
+                            <button id="recordBtn" class="btn btn-primary">
+                                <i class="fas fa-microphone"></i> Record
+                            </button>
+                            <button id="uploadBtn" class="btn btn-outline">
+                                <i class="fas fa-upload"></i> Upload
+                            </button>
+                            <input type="file" id="audioUpload" accept="audio/*" style="display: none;">
+                        </div>
+                    </div>
+                    
+                    <div class="audio-visualizer">
+                        <div class="visualizer-bars" id="visualizer">
+                            <!-- Bars will be generated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="enhancement-controls">
+                        <div class="control-group">
+                            <label for="noiseReduction">Noise Reduction</label>
+                            <div class="slider-container">
+                                <input type="range" min="0" max="100" value="50" class="slider" id="noiseReduction">
+                                <span class="slider-value" id="noiseReductionValue">50</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="clarityBoost">Clarity Boost</label>
+                            <div class="slider-container">
+                                <input type="range" min="0" max="100" value="30" class="slider" id="clarityBoost">
+                                <span class="slider-value" id="clarityBoostValue">30</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="bassBoost">Bass Boost</label>
+                            <div class="slider-container">
+                                <input type="range" min="0" max="100" value="20" class="slider" id="bassBoost">
+                                <span class="slider-value" id="bassBoostValue">20</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="trebleBoost">Treble Boost</label>
+                            <div class="slider-container">
+                                <input type="range" min="0" max="100" value="25" class="slider" id="trebleBoost">
+                                <span class="slider-value" id="trebleBoostValue">25</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="volumeNormalization">Volume Normalization</label>
+                            <div class="slider-container">
+                                <input type="range" min="0" max="100" value="75" class="slider" id="volumeNormalization">
+                                <span class="slider-value" id="volumeNormalizationValue">75</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="echoReduction">Echo Reduction</label>
+                            <div class="slider-container">
+                                <input type="range" min="0" max="100" value="40" class="slider" id="echoReduction">
+                                <span class="slider-value" id="echoReductionValue">40</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="autoEnhance">Auto Enhance</label>
+                            <div class="slider-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoEnhance">
+                                    <span class="slider-toggle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="voiceIsolation">Voice Isolation</label>
+                            <div class="slider-container">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="voiceIsolation" checked>
+                                    <span class="slider-toggle"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button id="processBtn" class="btn btn-primary">
+                            <i class="fas fa-magic"></i> Enhance Audio
+                        </button>
+                        <button id="resetBtn" class="btn btn-outline">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                    
+                    <div class="result-container" id="resultContainer">
+                        <h3>Enhanced Audio</h3>
+                        <audio controls class="audio-player" id="enhancedAudio"></audio>
+                        <button id="downloadBtn" class="btn btn-primary download-btn">
+                            <i class="fas fa-download"></i> Download Enhanced Audio
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="ad-banner">
+                    <!-- Google AdSense Bottom Ad -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                        crossorigin="anonymous"></script>
+                    <!-- Bottom Banner Ad -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                        data-ad-slot="XXXXXXXXXX"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+            
+            <div class="ad-sidebar">
+                <!-- Google AdSense Sidebar Ad -->
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                    crossorigin="anonymous"></script>
+                <!-- Sidebar Ad -->
+                <ins class="adsbygoogle"
+                    style="display:block"
+                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                    data-ad-slot="XXXXXXXXXX"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                
+                <div style="margin-top: 1.5rem;">
+                    <!-- Google AdSense Second Sidebar Ad -->
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+                        crossorigin="anonymous"></script>
+                    <!-- Sidebar Ad 2 -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                        data-ad-slot="XXXXXXXXXX"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">FAQ</a>
+        </div>
+        <p class="copyright">© 2023 VoiceEnhancePro. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // DOM Elements
+        const recordBtn = document.getElementById('recordBtn');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const audioUpload = document.getElementById('audioUpload');
+        const processBtn = document.getElementById('processBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const enhancedAudio = document.getElementById('enhancedAudio');
+        const resultContainer = document.getElementById('resultContainer');
+        const visualizer = document.getElementById('visualizer');
+        
+        // Sliders and their value displays
+        const sliders = {
+            noiseReduction: document.getElementById('noiseReduction'),
+            clarityBoost: document.getElementById('clarityBoost'),
+            bassBoost: document.getElementById('bassBoost'),
+            trebleBoost: document.getElementById('trebleBoost'),
+            volumeNormalization: document.getElementById('volumeNormalization'),
+            echoReduction: document.getElementById('echoReduction')
+        };
+        
+        const sliderValues = {
+            noiseReduction: document.getElementById('noiseReductionValue'),
+            clarityBoost: document.getElementById('clarityBoostValue'),
+            bassBoost: document.getElementById('bassBoostValue'),
+            trebleBoost: document.getElementById('trebleBoostValue'),
+            volumeNormalization: document.getElementById('volumeNormalizationValue'),
+            echoReduction: document.getElementById('echoReductionValue')
+        };
+        
+        // Toggles
+        const autoEnhance = document.getElementById('autoEnhance');
+        const voiceIsolation = document.getElementById('voiceIsolation');
+        
+        // Audio context and variables
+        let audioContext;
+        let analyser;
+        let microphone;
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+        let originalAudioBlob;
+        
+        // Initialize visualizer bars
+        function initVisualizer() {
+            visualizer.innerHTML = '';
+            for (let i = 0; i < 64; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = '2px';
+                visualizer.appendChild(bar);
+            }
+        }
+        
+        // Update visualizer
+        function updateVisualizer() {
+            if (!analyser) return;
+            
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+            
+            const bars = visualizer.querySelectorAll('.bar');
+            bars.forEach((bar, i) => {
+                const value = dataArray[i] || 2;
+                bar.style.height = `${value}px`;
+                bar.style.backgroundColor = `hsl(${value}, 100%, 50%)`;
+            });
+            
+            if (isRecording || enhancedAudio.currentTime > 0) {
+                requestAnimationFrame(updateVisualizer);
+            }
+        }
+        
+        // Initialize audio context
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+            }
+        }
+        
+        // Event listeners for sliders
+        Object.keys(sliders).forEach(key => {
+            sliders[key].addEventListener('input', () => {
+                sliderValues[key].textContent = sliders[key].value;
+                
+                // If auto-enhance is on, process audio immediately
+                if (autoEnhance.checked && originalAudioBlob) {
+                    processAudio();
+                }
+            });
+        });
+        
+        // Toggle event listeners
+        autoEnhance.addEventListener('change', () => {
+            if (autoEnhance.checked && originalAudioBlob) {
+                processAudio();
+            }
+        });
+        
+        voiceIsolation.addEventListener('change', () => {
+            if (autoEnhance.checked && originalAudioBlob) {
+                processAudio();
+            }
+        });
+        
+        // Record button click handler
+        recordBtn.addEventListener('click', async () => {
+            try {
+                if (!isRecording) {
+                    // Start recording
+                    initAudioContext();
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    microphone = audioContext.createMediaStreamSource(stream);
+                    microphone.connect(analyser);
+                    
+                    mediaRecorder = new MediaRecorder(stream);
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+                    
+                    mediaRecorder.onstop = () => {
+                        originalAudioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        audioChunks = [];
+                        const audioUrl = URL.createObjectURL(originalAudioBlob);
+                        
+                        // Play the recorded audio
+                        enhancedAudio.src = audioUrl;
+                        enhancedAudio.controls = true;
+                        
+                        // Connect audio element to analyser for visualization
+                        const source = audioContext.createMediaElementSource(enhancedAudio);
+                        source.connect(analyser);
+                        analyser.connect(audioContext.destination);
+                        
+                        // Show result container
+                        resultContainer.style.display = 'block';
+                        
+                        // Start visualizer
+                        updateVisualizer();
+                        
+                        // Auto-process if enabled
+                        if (autoEnhance.checked) {
+                            processAudio();
+                        }
+                    };
+                    
+                    mediaRecorder.start();
+                    isRecording = true;
+                    recordBtn.innerHTML = '<i class="fas fa-stop"></i> Stop';
+                    recordBtn.classList.remove('btn-primary');
+                    recordBtn.classList.add('btn-danger');
+                    initVisualizer();
+                } else {
+                    // Stop recording
+                    mediaRecorder.stop();
+                    microphone.disconnect();
+                    isRecording = false;
+                    recordBtn.innerHTML = '<i class="fas fa-microphone"></i> Record';
+                    recordBtn.classList.remove('btn-danger');
+                    recordBtn.classList.add('btn-primary');
+                }
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+                alert('Error accessing microphone. Please ensure you have granted microphone permissions.');
+            }
+        });
+        
+        // Upload button click handler
+        uploadBtn.addEventListener('click', () => {
+            audioUpload.click();
+        });
+        
+        // Audio upload handler
+        audioUpload.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            originalAudioBlob = file;
+            const audioUrl = URL.createObjectURL(file);
+            enhancedAudio.src = audioUrl;
+            enhancedAudio.controls = true;
+            
+            // Initialize audio context and connect to analyser
+            initAudioContext();
+            const source = audioContext.createMediaElementSource(enhancedAudio);
+            source.connect(analyser);
+            analyser.connect(audioContext.destination);
+            
+            // Show result container
+            resultContainer.style.display = 'block';
+            
+            // Initialize and start visualizer
+            initVisualizer();
+            enhancedAudio.addEventListener('play', updateVisualizer);
+            
+            // Auto-process if enabled
+            if (autoEnhance.checked) {
+                processAudio();
+            }
+        });
+        
+        // Process audio button click handler
+        processBtn.addEventListener('click', processAudio);
+        
+        // Audio processing function (simulated - in a real app, this would use Web Audio API or a backend service)
+        function processAudio() {
+            if (!originalAudioBlob) {
+                alert('Please record or upload audio first.');
+                return;
+            }
+            
+            // Simulate processing delay
+            processBtn.disabled = true;
+            processBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            setTimeout(() => {
+                // In a real implementation, this would apply the actual audio processing
+                // based on the slider values and toggles
+                const audioUrl = URL.createObjectURL(originalAudioBlob);
+                enhancedAudio.src = audioUrl;
+                
+                processBtn.disabled = false;
+                processBtn.innerHTML = '<i class="fas fa-magic"></i> Enhance Audio';
+                
+                // Show notification
+                showNotification('Audio enhanced successfully!');
+            }, 2000);
+        }
+        
+        // Reset button click handler
+        resetBtn.addEventListener('click', () => {
+            // Reset sliders to default values
+            sliders.noiseReduction.value = 50;
+            sliderValues.noiseReduction.textContent = '50';
+            
+            sliders.clarityBoost.value = 30;
+            sliderValues.clarityBoost.textContent = '30';
+            
+            sliders.bassBoost.value = 20;
+            sliderValues.bassBoost.textContent = '20';
+            
+            sliders.trebleBoost.value = 25;
+            sliderValues.trebleBoost.textContent = '25';
+            
+            sliders.volumeNormalization.value = 75;
+            sliderValues.volumeNormalization.textContent = '75';
+            
+            sliders.echoReduction.value = 40;
+            sliderValues.echoReduction.textContent = '40';
+            
+            autoEnhance.checked = false;
+            voiceIsolation.checked = true;
+            
+            // Reset audio
+            if (originalAudioBlob) {
+                const audioUrl = URL.createObjectURL(originalAudioBlob);
+                enhancedAudio.src = audioUrl;
+            }
+            
+            showNotification('Settings reset to default');
+        });
+        
+        // Download button click handler
+        downloadBtn.addEventListener('click', () => {
+            if (!enhancedAudio.src) {
+                alert('No audio to download. Please process audio first.');
+                return;
+            }
+            
+            const a = document.createElement('a');
+            a.href = enhancedAudio.src;
+            a.download = 'enhanced-audio.wav';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+        
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'var(--primary-color)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = 'var(--border-radius)';
+            notification.style.boxShadow = 'var(--box-shadow)';
+            notification.style.zIndex = '1000';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+        
+        // Initialize visualizer on load
+        window.addEventListener('load', initVisualizer);
+    </script>
+    
+    <!-- Structured data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Voice Enhancement Tool",
+        "url": "https://voiceenhancepro.com",
+        "description": "Free online voice enhancement tool to optimize and improve your audio recordings.",
+        "applicationCategory": "AudioApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>
